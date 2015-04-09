@@ -87,6 +87,20 @@ brew install tree
 #brew install webkit2png
 #brew install zopfli
 
+# Install apps with brew cask
+brew install caskroom/cask/brew-cask
+brew cask install calibre
+brew cask install dropbox
+brew cask install sublime-text
+brew cask install subl
+brew cask install mou
+brew cask install flux
+brew cask install scrivener
+brew cask install slack
+brew cask install spotify
+brew cask install transmission
+brew cask install vlc
+
 # Install Node.js. Note: this installs `npm` too, using the recommended
 # installation method.
 brew install node
