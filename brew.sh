@@ -100,6 +100,8 @@ brew cask install slack
 brew cask install spotify
 brew cask install transmission
 brew cask install vlc
+brew cask install caffeine
+brew cask install istat-menus
 
 # Install Node.js. Note: this installs `npm` too, using the recommended
 # installation method.
