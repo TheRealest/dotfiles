@@ -1,5 +1,7 @@
-# Simon's dotfiles.
+# Réal's dotfiles
 
-For information on how to use these files, I did a post on Nettuts+:
+A fork of `s10wen/dotfiles` with some changes for my own person preferences.
 
-<http://net.tutsplus.com/tutorials/tools-and-tips/setting-up-a-mac-dev-machine-from-zero-to-hero-with-dotfiles/>
+### Usage
+
+To use, run `bootstrap.sh`, then cd to `~` and run `brew.sh`, `install-deps.sh`, and then `.osx`. That's it!
