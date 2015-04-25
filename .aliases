@@ -10,10 +10,24 @@ alias -- -="cd -"
 alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-#alias p="cd ~/projects"
-alias g="git"
+alias p="cd ~/projects"
 alias h="history"
 alias j="jobs"
+
+alias g="git"
+eval "$(hub alias -s)"
+
+alias n="npm run"
+alias jks="jekyll serve"
+alias jksd="jekyll serve --drafts"
+
+# Application shortcuts
+alias mou="open -a ~/Applications/Mou.app"
+
+# Script commands
+alias fkcl="~/bash_scripts/fork-clone.sh"
+alias gitownclone="~/bash_scripts/create-github-repo-from-template.sh"
+alias mksfork="~/bash_scripts/mks17-fork-clone.sh"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -49,7 +63,7 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
+alias localip="ipconfig getifaddr en1"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Flush Directory Service cache
