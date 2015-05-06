@@ -1,10 +1,59 @@
+" BEGIN VUNDLE CONFIG
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" Start of user plugins
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-surround'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Townk/vim-autoclose'
+Plugin 'vim-scripts/closetag.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'mattn/emmet-vim'
+
+call vundle#end()
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+
+" END VUNDLE CONFIG
+
+
 " Use the Solarized Dark theme
 set background=dark
 colorscheme solarized
 let g:solarized_termtrans=1
 
-" Make Vim more useful
-set nocompatible
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" theme and symbols
+let g:airline_powerline_fonts=1
+let g:airline_theme = 'wombat'
+
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
 " Enhance command-line completion
@@ -19,8 +68,6 @@ set ttyfast
 set gdefault
 " Use UTF-8 without BOM
 set encoding=utf-8 nobomb
-" Change mapleader
-let mapleader=","
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
@@ -48,6 +95,10 @@ syntax on
 set cursorline
 " Make tabs as wide as two spaces
 set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set smarttab
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
@@ -95,6 +146,32 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
+" Session saving/loading on exit/enter
+fu! SaveSess()
+    execute 'mksession! ' . getcwd() . '/.session.vim'
+endfunction
+
+fu! RestoreSess()
+if filereadable(getcwd() . '/.session.vim')
+    execute 'so ' . getcwd() . '/.session.vim'
+    if bufexists(1)
+        for l in range(1, bufnr('$'))
+            if bufwinnr(l) == -1
+                exec 'sbuffer ' . l
+            endif
+        endfor
+    endif
+endif
+syntax on
+endfunction
+
+autocmd VimLeave * NERDTreeClose
+autocmd VimLeave * call SaveSess()
+
+autocmd VimEnter * call RestoreSess()
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+
 " Automatic commands
 if has("autocmd")
     " Enable file type detection
@@ -104,3 +181,48 @@ if has("autocmd")
     " Treat .md files as Markdown
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
+
+
+"""""""""""""""""""""""""
+" BEGIN PLUGIN SETTINGS "
+"""""""""""""""""""""""""
+" Set NERDTree's default size
+let NERDTreeWinSize=20
+
+"""""""""""""""""""""""""""
+" BEGIN PERSONAL MAPPINGS "
+"""""""""""""""""""""""""""
+" Change mapleader
+let mapleader=","
+
+" Source .vimrc
+nnoremap <Leader>sv :source ~/.vimrc<CR>
+
+" Single insert
+nmap <space> i_<esc>r
+
+" Switch windows w/ one key
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Save and close tab
+nnoremap ZA :wa<CR>:tabc<CR>
+
+" New tab
+nnoremap <C-t> :tabnew<CR>
+
+" Removing directional keys
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+" Inserting double lines below/above
+nnoremap <Leader>j o<CR>
+nnoremap <Leader>k O<Esc>O
+
+" Increase/decrease window size
+nnoremap + :resize +5<CR>
+nnoremap - :resize -5<CR>
