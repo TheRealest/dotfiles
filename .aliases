@@ -11,6 +11,7 @@ alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
+alias mks="cd ~/projects/makersquare"
 alias h="history"
 alias j="jobs"
 
@@ -19,7 +20,10 @@ eval "$(hub alias -s)"
 
 alias n="npm run"
 alias jks="jekyll serve"
-alias jksd="jekyll serve --drafts"
+alias jkd="jekyll serve --drafts"
+
+colors() { x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; }
+alias colors="colors"
 
 # Application shortcuts
 alias mou="open -a ~/Applications/Mou.app"

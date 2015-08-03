@@ -1,73 +1,65 @@
+[user]
+	name = Réal Provencher
+	email = real@rrprovencher.com
+[credential]
+	helper = osxkeychain
+[push]
+	default = current
 [alias]
-
-    # View abbreviated SHA, description, and history graph of the latest 20 commits
-    l = log --pretty=oneline -n 20 --graph --abbrev-commit
-
-    # View the current working tree status using the short format
-    s = status -s
-
-    # Show the diff between the latest commit and the current state
-    d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-
-    # `git di $number` shows the diff between the state `$number` revisions ago and the current state
-    di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-
-    # Pull in remote changes for the current repository and all its submodules
-    p = !"git pull; git submodule foreach git pull origin master"
-
-    # Clone a repository including all submodules
-    c = clone --recursive
-
-    # Commit all changes
-    ca = !git add -A && git commit -av
-
-    # Switch to a branch, creating it if necessary
-    go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-
-    # Show verbose output about tags, branches or remotes
-    tags = tag -l
-    branches = branch -a
-    remotes = remote -v
-
-    # Amend the currently staged files to the latest commit
-    amend = commit --amend --reuse-message=HEAD
-
-    # Credit an author on the latest commit
-    credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-
-    # Interactive rebase with the given number of latest commits
-    reb = "!r() { git rebase -i HEAD~$1; }; r"
-
-    # Find branches containing commit
-    fb = "!f() { git branch -a --contains $1; }; f"
-
-    # Find tags containing commit
-    ft = "!f() { git describe --always --contains $1; }; f"
-
-    # Find commits by source code
-    fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-
-    # Find commits by commit message
-    fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-
-    # Remove branches that have already been merged with master
-    # a.k.a. ‘delete merged’
-    dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-
-    # List contributors with number of commits
-    contributors = shortlog --summary --numbered
-
-    # Merge GitHub pull request on top of the `master` branch
-    mpr = "!f() { \
-        if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
-            git fetch origin refs/pull/$1/head:pr/$1 && \
-            git rebase master pr/$1 && \
-            git checkout master && \
-            git merge pr/$1 && \
-            git branch -D pr/$1 && \
-            git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
-        fi \
-    }; f"
+  s = status -s
+  pl = pull
+  plr = pull --rebase
+  ps = push
+  psf = push -f
+  pst = push --tags
+  f = fetch
+  fa = fetch --all
+  a = add
+  aa = add --all
+  ai = add -i
+  ap = add -p
+  an = add -AN
+  cm = commit -m
+  cnm = commit -nm
+  cam = commit --amend --no-edit
+  co = checkout
+  cob = checkout -b
+  cot = checkout -t
+  b = branch -vv
+  ba = branch -a
+  bd = branch -d
+  bf = branch -f
+  con = branch --contains
+  st = stash
+  stp = stash pop
+  stl = stash list
+  sts = stash show
+  stb = stash branch
+  cp = cherry-pick
+  r = remote -v
+  d = diff
+  res = reset
+  resh = reset --hard HEAD
+  pn = remote prune origin
+  m = merge
+  mm = merge origin/master
+  rb = rebase
+  rbm = rebase master
+  rbi = rebase -i
+  rbc = rebase --continue
+  pr = pull-request
+  pro = pull-request -o
+  prmks = pull-request -b TheRealest -o
+  cl = clone
+  l = log --graph --decorate --oneline
+  ll = log --graph --decorate --oneline --branches
+  tail = rev-list --max-parents=0 HEAD
+  list = config --get-regexp ^alias\\.
+  bw = browse
+  bwp = browse -- pulls
+  bwi = "! f() { hub browse -- issues/$1; }; f"
+  lines-project = "! f() { printf \"Project total -- \"; git log --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: +%s, removed lines: -%s, net lines: %s\\n\", add, subs, loc }'; }; f"
+  lines = "! f() { printf \"$@ -- \"; git log --author=\"$@\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: +%s, removed lines: -%s, net lines: %s\\n\", add, subs, loc }' -; }; git log --format='%aN' | sort | uniq | while read line ; do f \"$line\" ; done; printf \"\n\"; git lines-project"
 
 [apply]
 
@@ -127,18 +119,6 @@
 
     # Automatically correct and execute mistyped commands
     autocorrect = 1
-
-[merge]
-
-    # Include summaries of merged commits in newly created merge commit messages
-    log = true
-
-[push]
-
-    # Use the Git 1.x.x default to avoid errors on machines with old Git
-    # installations. To use `simple` instead, add this to your `~/.extra` file:
-    # `git config --global push.default simple`. See http://git.io/mMah-w.
-    default = matching
 
 # URL shorthands
 

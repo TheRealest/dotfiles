@@ -5,10 +5,22 @@
 .DS_Store
 Desktop.ini
 
-# Thumbnail cache files
+# Cache files
 ._*
 Thumbs.db
+.sass-cache
 
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+
+# Editor files
+*sublime*
+.lein-repl-history
+
+# Dependencies
+node_modules
+bower_components
+
+# Vim sessions
+.session.vim

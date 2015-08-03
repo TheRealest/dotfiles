@@ -23,7 +23,14 @@ Plugin 'Townk/vim-autoclose'
 Plugin 'vim-scripts/closetag.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end()
 filetype plugin indent on    " required
@@ -55,7 +62,7 @@ let g:airline_powerline_fonts=1
 let g:airline_theme = 'wombat'
 
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
+" set clipboard=unnamedplus
 " Enhance command-line completion
 set wildmenu
 " Allow cursor keys in insert mode
@@ -69,8 +76,8 @@ set gdefault
 " Use UTF-8 without BOM
 set encoding=utf-8 nobomb
 " Don’t add empty newlines at the end of files
-set binary
-set noeol
+"set binary
+"set noeol
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
@@ -189,6 +196,35 @@ endif
 " Set NERDTree's default size
 let NERDTreeWinSize=20
 
+" RainbowParentheses
+au VimEnter * RainbowParenthesesActivate
+function! LoadRainbowParens()
+  RainbowParenthesesLoadRound
+  RainbowParenthesesLoadSquare
+  RainbowParenthesesLoadBraces
+endfunction
+nnoremap !r :call LoadRainbowParens()<CR>
+
+"au BufNewFile,BufRead * RainbowParenthesesLoadRound
+"au BufNewFile,BufRead * RainbowParenthesesLoadSquare
+"au BufNewFile,BufRead * RainbowParenthesesLoadBraces
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!|wincmd p
+nnoremap \ :Ag<SPACE>
+
 """""""""""""""""""""""""""
 " BEGIN PERSONAL MAPPINGS "
 """""""""""""""""""""""""""
@@ -201,6 +237,9 @@ nnoremap <Leader>sv :source ~/.vimrc<CR>
 " Single insert
 nmap <space> i_<esc>r
 
+" Delete to black hole
+nnoremap R "_d
+
 " Switch windows w/ one key
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -211,7 +250,7 @@ nnoremap <C-l> <C-w>l
 nnoremap ZA :wa<CR>:tabc<CR>
 
 " New tab
-nnoremap <C-t> :tabnew<CR>
+"nnoremap <C-t> :tabnew<CR>
 
 " Removing directional keys
 noremap <Up> <nop>
@@ -226,3 +265,19 @@ nnoremap <Leader>k O<Esc>O
 " Increase/decrease window size
 nnoremap + :resize +5<CR>
 nnoremap - :resize -5<CR>
+
+" Insert markdown fenced code block
+function! FencedCodeBlock()
+   normal! i``````k
+   startinsert!
+endfunction
+nnoremap <leader>c :call FencedCodeBlock()<CR>
+
+" Add semicolon to end of line
+function! AppendSemicolon()
+  normal! mpA;`p
+endfunction
+nnoremap <leader>sc :call AppendSemicolon()<CR>
+
+" grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
