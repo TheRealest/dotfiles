@@ -1,6 +1,6 @@
 # Réal's dotfiles
 
-A fork of `s10wen/dotfiles` with some changes for my own person preferences.
+A fork of `s10wen/dotfiles` with some changes for my own personal preferences.
 
 ### Usage
 
