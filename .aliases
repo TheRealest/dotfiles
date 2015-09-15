@@ -22,6 +22,12 @@ alias n="npm run"
 alias jks="jekyll serve"
 alias jkd="jekyll serve --drafts"
 
+alias treei="tree -I \"node*\""
+
+alias t="todo.sh"
+
+alias tm="tmux"
+
 colors() { x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; }
 alias colors="colors"
 
