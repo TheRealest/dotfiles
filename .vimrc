@@ -20,7 +20,6 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Townk/vim-autoclose'
-Plugin 'vim-scripts/closetag.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-repeat'
@@ -31,6 +30,10 @@ Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'wavded/vim-stylus'
+Plugin 'tpope/vim-ragtag'
 
 call vundle#end()
 filetype plugin indent on    " required
@@ -51,7 +54,6 @@ filetype plugin indent on    " required
 " Use the Solarized Dark theme
 set background=dark
 colorscheme solarized
-let g:solarized_termtrans=1
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -62,7 +64,7 @@ let g:airline_powerline_fonts=1
 let g:airline_theme = 'wombat'
 
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
-" set clipboard=unnamedplus
+"set clipboard=unnamedplus
 " Enhance command-line completion
 set wildmenu
 " Allow cursor keys in insert mode
@@ -94,8 +96,6 @@ set modelines=4
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
 set secure
-" Enable line numbers
-set number
 " Enable syntax highlighting
 syntax on
 " Highlight current line
@@ -133,11 +133,12 @@ set showmode
 set title
 " Show the (partial) command as it’s being typed
 set showcmd
-" Use relative line numbers
+" Use hybrid line numbers
 if exists("&relativenumber")
     set relativenumber
     au BufReadPost * set relativenumber
 endif
+set number
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
@@ -189,6 +190,9 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
+" Code folding "
+autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent foldlevel=1 nofoldenable
+autocmd BufNewFile,BufReadPost *.html setl foldmethod=indent foldlevel=0 nofoldenable
 
 """""""""""""""""""""""""
 " BEGIN PLUGIN SETTINGS "
@@ -222,8 +226,20 @@ if executable('ag')
 endif
 
 " bind \ (backward slash) to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!|wincmd p
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!|wincmd p
 nnoremap \ :Ag<SPACE>
+
+" indent guides
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=10 "base01
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0 "base02
+
+" change emmet trigger key to C-X to match ragtag
+let g:user_emmet_leader_key='<C-X>'
 
 """""""""""""""""""""""""""
 " BEGIN PERSONAL MAPPINGS "
@@ -281,3 +297,16 @@ nnoremap <leader>sc :call AppendSemicolon()<CR>
 
 " grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" visual shifting
+vnoremap < <gv
+vnoremap > >gv
+
+" fugitive mappings
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+
+" fugitive diff helpers
+nnoremap <silent> <leader>dp V:diffput<CR>
+nnoremap <silent> <leader>do V:diffget<CR>
+nnoremap <silent> <leader>du :diffupdate<CR>
