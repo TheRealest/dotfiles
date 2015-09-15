@@ -16,7 +16,7 @@ if tput setaf 1 &> /dev/null; then
         ORANGE=$(tput setaf 172)
         GREEN=$(tput setaf 190)
         PURPLE=$(tput setaf 141)
-        WHITE=$(tput setaf 256)
+        WHITE=$(tput setaf 255)
         PINK=$(tput setaf 164)
         SEAGREEN=$(tput setaf 72)
     else
@@ -63,6 +63,6 @@ function usernamehost() {
 # show smiley indicating successful/unsuccessful last command
 SMILEY="\`if [[ \${PIPESTATUS[0]} -eq 0 ]]; then echo \"${BOLD}${SEAGREEN}(:\"; else echo \"${BOLD}${PINK}):\"; fi\`${RESET} "
 
-PS1='${RESET}${TOPLEFT}(${BOLD}$(usernamehost)${GREEN}\w${RESET})$(git_info)${WHITE}\n${RESET}${BOTTOMLEFT}${DASH}${RESET}(${WHITE}${BOLD}\t${RESET})${DASH}'
+PS1='${RESET}${TOPLEFT}(${BOLD}$(usernamehost)${GREEN}\w${RESET})$(git_info)\n${RESET}${BOTTOMLEFT}${DASH}${RESET}(${WHITE}\t${RESET})${DASH}'
 PS1=$PS1"$SMILEY"
 PS1=$PS1'${RESET}'
