@@ -4,7 +4,7 @@ export PATH="$HOME/bin:$PATH";
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+for file in ~/.{path,exports,bash_prompt,aliases,functions,extra}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -64,9 +64,16 @@ fi
 # http://stackoverflow.com/questions/13804382/how-to-automatically-run-bin-bash-login-automatically-in-the-embeded-termin
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+# Lever bash setup
+source ~/lever/bash/lever-profile
+
 # awscli completion
 complete -C '/usr/local/bin/aws_completer' aws
 
 # todo.txt completion
 source ~/.todo/todo_completion
 complete -F _todo t
+
+# tmuxinator completion
+source ~/.tmux/tmuxinator-completion.bash
+export LOLCOMMITS_DELAY=3
