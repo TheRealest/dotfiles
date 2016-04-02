@@ -28,16 +28,19 @@
   b = branch -vv
   ba = branch -a
   bd = branch -d
+  bD = branch -D
   bf = branch -f
   con = branch --contains
   st = stash
   stp = stash pop
+  std = stash drop
   stl = stash list
-  sts = stash show
+  sts = "! f() { num=${1:-'0'}; hub stash show -p stash@{$num}; }; f"
   stb = stash branch
   cp = cherry-pick
   r = remote -v
   d = diff
+  df = diff --name-status
   res = reset
   resh = reset --hard HEAD
   pn = remote prune origin
@@ -51,8 +54,11 @@
   pro = pull-request -o
   prmks = pull-request -b TheRealest -o
   cl = clone
-  l = log --graph --decorate --oneline
-  ll = log --graph --decorate --oneline --branches
+  l = log --graph --decorate --oneline --pretty=format:"%C(yellow)%h\\ %Cgreen%cd%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --date=relative
+  ll = log --graph --decorate --oneline --branches --pretty=format:"%C(yellow)%h\\ %Cgreen%cd%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --date=relative
+
+  ls = log --graph --decorate --oneline --stat
+  lf = log --follow -p
   tail = rev-list --max-parents=0 HEAD
   list = config --get-regexp ^alias\\.
   bw = browse
