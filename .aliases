@@ -14,9 +14,13 @@ alias p="cd ~/projects"
 alias mks="cd ~/projects/makersquare"
 alias h="history"
 alias j="jobs"
+alias kkill="kill -9"
 
 alias g="git"
 eval "$(hub alias -s)"
+
+alias lquick="npm install distracteddev/derby distracteddev/racer-bundle"
+alias lrenpm="rm -rf node_modules/ && npm install"
 
 alias n="npm run"
 alias jks="jekyll serve"
@@ -27,6 +31,11 @@ alias treei="tree -I \"node*\""
 alias t="todo.sh"
 
 alias tm="tmux"
+alias tml="tmux ls"
+alias tma="tmux attach -t"
+alias tmk="tmux kill-session -t"
+
+alias dm="docker-machine"
 
 colors() { x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; }
 alias colors="colors"
@@ -38,6 +47,9 @@ alias mou="open -a ~/Applications/Mou.app"
 alias fkcl="~/bash_scripts/fork-clone.sh"
 alias gitownclone="~/bash_scripts/create-github-repo-from-template.sh"
 alias mksfork="~/bash_scripts/mks17-fork-clone.sh"
+
+# ksp
+alias ksp="/Users/realprovencher/Library/Application\ Support/Steam/steamapps/common/Kerbal\ Space\ Program/KSP.app/Contents/MacOS/KSP &"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
