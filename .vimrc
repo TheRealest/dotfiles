@@ -34,6 +34,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'wavded/vim-stylus'
 Plugin 'tpope/vim-ragtag'
+Plugin 'christoomey/vim-tmux-navigator'
 
 call vundle#end()
 filetype plugin indent on    " required
@@ -188,6 +189,11 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
     " Treat .md files as Markdown
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+    " Treat .ni files as Inform 7
+    autocmd BufNewFile,BufRead *.ni setlocal filetype=inform7
+    autocmd Filetype inform7 setlocal ts=2 sw=2 sts=2 noexpandtab
+    autocmd Filetype inform7 setlocal commentstring=[%s]
+    autocmd Filetype inform7 setlocal autoindent smartindent
 endif
 
 " Code folding "
@@ -305,6 +311,8 @@ vnoremap > >gv
 " fugitive mappings
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+vnoremap <silent> <leader>gw :Gbrowse<CR>
 
 " fugitive diff helpers
 nnoremap <silent> <leader>dp V:diffput<CR>
