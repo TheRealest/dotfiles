@@ -1,0 +1,19 @@
+snippet "(#\s*)?cop" "Codo param" r
+# @param ${1:name} [${2:Type}] $0
+endsnippet
+
+snippet "(#\s*)?coo" "Codo option" r
+# @option ${1:name} [${2:Type}] $0
+endsnippet
+
+snippet "(#\s*)?cor" "Codo return" r
+# @return [${1:Type}] $0
+endsnippet
+
+snippet "(#\s*)?coc" "Codo callback" r
+# @callback $0
+endsnippet
+
+snippet req "coffeescript require statement"
+${1:package} = require '$1'
+endsnippet

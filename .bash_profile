@@ -64,9 +64,6 @@ fi
 # http://stackoverflow.com/questions/13804382/how-to-automatically-run-bin-bash-login-automatically-in-the-embeded-termin
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-# Lever bash setup
-source ~/lever/bash/lever-profile
-
 # awscli completion
 complete -C '/usr/local/bin/aws_completer' aws
 
@@ -75,5 +72,42 @@ source ~/.todo/todo_completion
 complete -F _todo t
 
 # tmuxinator completion
-source ~/.tmux/tmuxinator-completion.bash
+source ~/.tmuxinator/completions.bash
 export LOLCOMMITS_DELAY=3
+
+export NVM_DIR="/Users/realp/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+eval $(docker-machine env default)
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+# belfort completion
+###-begin-belfort-completions-###
+#
+# yargs command completion script
+#
+# Installation: coffee src/bin/belfort completion >> ~/.bashrc
+#    or coffee src/bin/belfort completion >> ~/.bash_profile on OSX.
+#
+_yargs_completions()
+{
+    local cur_word args type_list
+
+    cur_word="${COMP_WORDS[COMP_CWORD]}"
+    args=("${COMP_WORDS[@]}")
+
+    # ask yargs to generate completions.
+    type_list=$(coffee src/bin/belfort --get-yargs-completions "${args[@]}")
+
+    COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
+
+    # if no match was found, fall back to filename completion
+    if [ ${#COMPREPLY[@]} -eq 0 ]; then
+      COMPREPLY=( $(compgen -f -- "${cur_word}" ) )
+    fi
+
+    return 0
+}
+complete -F _yargs_completions belfort
+###-end-belfort-completions-###

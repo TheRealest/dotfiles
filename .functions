@@ -244,3 +244,8 @@ function o() {
 function tre() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# attach with a shell to a running docker container
+function docker_exec_sh() {
+    docker exec -it $1 sh
+}

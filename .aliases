@@ -6,25 +6,67 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
-# Shortcuts
-alias d="cd ~/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
-alias mks="cd ~/projects/makersquare"
+alias dl="cd ~/Downloads"
+
+alias kkill="kill -9"
+alias duh="du -s * | sort -nr" # sort items in current directory by size
+alias duhh="du -hs *" # unsorted but with human readable sizes
+alias dfh="df -h"
+
 alias h="history"
 alias j="jobs"
-alias kkill="kill -9"
 
 alias g="git"
 eval "$(hub alias -s)"
 
-alias lquick="npm install distracteddev/derby distracteddev/racer-bundle"
-alias lrenpm="rm -rf node_modules/ && npm install"
+alias pbcopy="reattach-to-user-namespace pbcopy"
+
+alias renpm="rm -rf node_modules/ && time npm install"
+
+alias npubpatch="npm version patch && lpublish"
+alias npubminor="npm version minor && lpublish"
+
 
 alias n="npm run"
 alias jks="jekyll serve"
 alias jkd="jekyll serve --drafts"
+# python virtualenv activate shortcut
+alias activate="source env/bin/activate"
+
+alias treei="tree -I \"node*\""
+
+alias t="todo.sh"
+
+alias tm="tmux"
+alias tml="tmux ls"
+alias tma="tmux attach -t"
+alias tmk="tmux kill-session -t"
+
+alias revim="rm .session.vim; vim"
+
+alias d="docker"
+alias dsh="docker_exec_sh" # see .functions
+alias dm="docker-machine"
+alias dme='eval $(docker-machine env default)'
+alias dc="docker-compose"
+alias dcu="docker-compose up"
+alias dcub="docker-compose up --build"
+
+alias ngrok="~/ngrok"
+
+alias j="jira"
+alias jl="jira ls -p nrtr"
+alias js="jira show"
+
+alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
+
+alias mii="iex -S mix"
+alias mit="mix test"
+alias mitt="mix test --trace"
+
+# love2d (lua 2D game framework) launcher
+alias love="/Applications/love.app/Contents/MacOS/love"
 
 alias treei="tree -I \"node*\""
 
@@ -41,7 +83,7 @@ colors() { x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$
 alias colors="colors"
 
 # Application shortcuts
-alias mou="open -a ~/Applications/Mou.app"
+alias mou="open -a /Applications/Mou.app"
 
 # Script commands
 alias fkcl="~/bash_scripts/fork-clone.sh"
