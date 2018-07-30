@@ -6,32 +6,88 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
-# Shortcuts
-alias d="cd ~/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
-alias mks="cd ~/projects/makersquare"
-alias h="history"
-alias j="jobs"
+alias dl="cd ~/Downloads"
+
+alias kkill="kill -9"
+alias duh="du -s * | sort -nr" # sort items in current directory by size
+alias duhh="du -hs *" # unsorted but with human readable sizes
+alias dfh="df -h"
 
 alias g="git"
 eval "$(hub alias -s)"
 
+alias pbcopy="reattach-to-user-namespace pbcopy"
+
+alias lquickbuilds="npm install distracteddev/derby"
+alias lquickcache="cd ~/lever/hire2/node_modules/lever-backend-app && npm install distracteddev/racer-bundle#with.cache && cd -"
+alias lcompilewatch="find . -name '*.coffee' | perl -ne '/node_modules\/(?!(l-|lever-))/ || print' | xargs -n300 -P4 coffee -bcw"
+alias lhire="LEVER_APP=candidates USE_CACHE=true node server.js"
+alias lhireclear="LEVER_APP=candidates USE_CACHE=true CLEAR_CACHE=true node server.js"
+alias lchire="LEVER_APP=candidates USE_CACHE=true coffee server.coffee"
+alias lchireclear="LEVER_APP=candidates USE_CACHE=true CLEAR_CACHE=true coffee server.coffee"
+alias lhireclearcandidates="DISABLE_BUILD_CACHE=true LEVER_APP=candidates USE_CACHE=true CLEAR_CACHE=true coffee server.coffee"
+
+alias lrenpm="rm -rf node_modules/ && time npm install"
+alias lreinstall="time (lrenpm && lquickbuilds && lquickcache)"
+alias affiance="~/lever/hire2/node_modules/.bin/affiance"
+
+alias npubpatch="npm version patch && lpublish"
+alias npubminor="npm version minor && lpublish"
+
 alias n="npm run"
 alias jks="jekyll serve"
 alias jkd="jekyll serve --drafts"
+# python virtualenv activate shortcut
+alias activate="source env/bin/activate"
+
+alias treei="tree -I \"node*\""
+
+alias t="todo.sh"
+
+alias tm="tmux"
+alias tml="tmux ls"
+alias tma="tmux attach -t"
+alias tmk="tmux kill-session -t"
+
+alias revim="rm .session.vim; vim"
+
+alias d="docker"
+alias dsh="docker_exec_sh" # see .functions
+alias dm="docker-machine"
+alias dme='eval $(docker-machine env default)'
+alias dc="docker-compose"
+alias dcu="docker-compose up"
+alias dcub="docker-compose up --build"
+
+alias ngrok="~/ngrok"
+
+alias j="jira"
+alias jl="jira ls -p nrtr"
+alias js="jira show"
+
+alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
+
+alias mii="iex -S mix"
+alias mit="mix test"
+alias mitt="mix test --trace"
+
+# love2d (lua 2D game framework) launcher
+alias love="/Applications/love.app/Contents/MacOS/love"
 
 colors() { x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; }
 alias colors="colors"
 
 # Application shortcuts
-alias mou="open -a ~/Applications/Mou.app"
+alias mou="open -a /Applications/Mou.app"
 
 # Script commands
 alias fkcl="~/bash_scripts/fork-clone.sh"
 alias gitownclone="~/bash_scripts/create-github-repo-from-template.sh"
 alias mksfork="~/bash_scripts/mks17-fork-clone.sh"
+
+# ksp
+alias ksp="/Users/realprovencher/Library/Application\ Support/Steam/steamapps/common/Kerbal\ Space\ Program/KSP.app/Contents/MacOS/KSP &"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`

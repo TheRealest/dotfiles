@@ -4,7 +4,7 @@ export PATH="$HOME/bin:$PATH";
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+for file in ~/.{path,exports,bash_prompt,aliases,functions,extra}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -44,6 +44,11 @@ fi;
 # You could just use `-g` instead, but I like being explicit
 complete -W "NSGlobalDomain" defaults;
 
+# Add tab completion for git commands and branch names
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
@@ -58,3 +63,51 @@ fi
 
 # http://stackoverflow.com/questions/13804382/how-to-automatically-run-bin-bash-login-automatically-in-the-embeded-termin
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# awscli completion
+complete -C '/usr/local/bin/aws_completer' aws
+
+# todo.txt completion
+source ~/.todo/todo_completion
+complete -F _todo t
+
+# tmuxinator completion
+source ~/.tmuxinator/completions.bash
+export LOLCOMMITS_DELAY=3
+
+export NVM_DIR="/Users/realp/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+eval $(docker-machine env default)
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+# belfort completion
+###-begin-belfort-completions-###
+#
+# yargs command completion script
+#
+# Installation: coffee src/bin/belfort completion >> ~/.bashrc
+#    or coffee src/bin/belfort completion >> ~/.bash_profile on OSX.
+#
+_yargs_completions()
+{
+    local cur_word args type_list
+
+    cur_word="${COMP_WORDS[COMP_CWORD]}"
+    args=("${COMP_WORDS[@]}")
+
+    # ask yargs to generate completions.
+    type_list=$(coffee src/bin/belfort --get-yargs-completions "${args[@]}")
+
+    COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
+
+    # if no match was found, fall back to filename completion
+    if [ ${#COMPREPLY[@]} -eq 0 ]; then
+      COMPREPLY=( $(compgen -f -- "${cur_word}" ) )
+    fi
+
+    return 0
+}
+complete -F _yargs_completions belfort
+###-end-belfort-completions-###

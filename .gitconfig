@@ -1,6 +1,6 @@
 [user]
-	name = Réal Provencher
-	email = real@rrprovencher.com
+	name = Réal Provencher-Deshler
+	email = real.provencher.deshler@gmail.com
 [credential]
 	helper = osxkeychain
 [push]
@@ -22,27 +22,38 @@
   cm = commit -m
   cnm = commit -nm
   cam = commit --amend --no-edit
+  ce = commit -m \"empty commit\" --allow-empty
   co = checkout
   cob = checkout -b
   cot = checkout -t
-  b = branch -vv
-  ba = branch -a
-  bd = branch -d
-  bf = branch -f
+  b = branch -vv # show local branches
+  ba = branch -a # show remote branches too
+  bd = branch -d # delete a branch
+  bdd = branch -D # delete it even if it's not merged
+  bda = "! f() { git branch --merged | grep -vE '(\\*|master)' | xargs -n 1 git branch -d; }; f" # delete all local branches that have been merged to HEAD
+  bf = branch -f # force a branch to point to HEAD
+  bu = "! f() { branchname=$(git symbolic-ref --short HEAD); git branch --set-upstream-to=origin/$branchname $branchname; }; f" # fix upstream tracking
   con = branch --contains
   st = stash
   stp = stash pop
+  sta = stash apply
+  std = stash drop
   stl = stash list
-  sts = stash show
+  stc = stash clear
+  sts = "! f() { num=${1:-'0'}; hub stash show -p stash@{$num}; }; f"
   stb = stash branch
   cp = cherry-pick
   r = remote -v
   d = diff
+  df = diff --stat
+  ds = diff --staged
+  bi = bisect
   res = reset
   resh = reset --hard HEAD
   pn = remote prune origin
   m = merge
   mm = merge origin/master
+  mmm = "! f() { git checkout master && git pull && git checkout - && git merge -; }; f"
   rb = rebase
   rbm = rebase master
   rbi = rebase -i
@@ -51,8 +62,12 @@
   pro = pull-request -o
   prmks = pull-request -b TheRealest -o
   cl = clone
-  l = log --graph --decorate --oneline
-  ll = log --graph --decorate --oneline --branches
+  clf = clean -f
+  l = log --graph --decorate --oneline --pretty=format:"%C(yellow)%h\\ %Cgreen%cd%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --date=relative
+  ll = log --graph --decorate --oneline --branches --pretty=format:"%C(yellow)%h\\ %Cgreen%cd%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --date=relative
+
+  ls = log --graph --decorate --oneline --stat
+  lf = log --follow -p
   tail = rev-list --max-parents=0 HEAD
   list = config --get-regexp ^alias\\.
   bw = browse
@@ -60,6 +75,7 @@
   bwi = "! f() { hub browse -- issues/$1; }; f"
   lines-project = "! f() { printf \"Project total -- \"; git log --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: +%s, removed lines: -%s, net lines: %s\\n\", add, subs, loc }'; }; f"
   lines = "! f() { printf \"$@ -- \"; git log --author=\"$@\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: +%s, removed lines: -%s, net lines: %s\\n\", add, subs, loc }' -; }; git log --format='%aN' | sort | uniq | while read line ; do f \"$line\" ; done; printf \"\n\"; git lines-project"
+  over = overwritten
 
 [apply]
 

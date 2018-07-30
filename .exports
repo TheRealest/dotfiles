@@ -20,3 +20,46 @@ export MANPAGER="less -X";
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto";
+
+# powerline tmux script
+#export POWERLINE_CONFIG_COMMAND="/Users/realprovencher/.tmux/plugins/powerline/powerline/bindings/bash/powerline.sh"
+export PATH="$PATH:/Users/realprovencher/.tmux/plugins/powerline/powerline/bindings/bash/powerline.sh"
+
+### Solarized colors for use in prompts
+## colors
+export SOLARIZED_YELLOW=$(tput setaf 136)
+export SOLARIZED_ORANGE=$(tput setaf 166)
+export SOLARIZED_RED=$(tput setaf 160)
+export SOLARIZED_MAGENTA=$(tput setaf 125)
+export SOLARIZED_VIOLET=$(tput setaf 61)
+export SOLARIZED_BLUE=$(tput setaf 33)
+export SOLARIZED_CYAN=$(tput setaf 37)
+export SOLARIZED_GREEN=$(tput setaf 64)
+
+## grayscale
+# dark backgrounds
+export SOLARIZED_BASE03=$(tput setaf 234)
+export SOLARIZED_BASE02=$(tput setaf 235)
+# mids (content)
+export SOLARIZED_BASE01=$(tput setaf 240)
+export SOLARIZED_BASE00=$(tput setaf 241)
+export SOLARIZED_BASE0=$(tput setaf 244)
+export SOLARIZED_BASE1=$(tput setaf 245)
+# light backgrounds
+export SOLARIZED_BASE2=$(tput setaf 254)
+export SOLARIZED_BASE3=$(tput setaf 230)
+
+# lolcommits delay for laptop camera
+export LOLCOMMITS_DELAY=3
+
+# allow requiring npm modules from repl session
+export NODE_PATH="/Users/realprovencher/.npm/lib/node_modules"
+
+# disable virtualenv activate scripts from editing the command line prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# ngrok seat
+export LEVER_NGROK_ID="10"
+
+# Configuration for Lever's Slack
+export LEVER_SLACK_USERNAME="real"
