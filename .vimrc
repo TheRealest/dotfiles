@@ -72,6 +72,18 @@ filetype plugin indent on    " required
 " END VUNDLE CONFIG
 
 
+" Use the Solarized Dark theme
+set background=dark
+colorscheme solarized
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" theme and symbols
+let g:airline_powerline_fonts=1
+let g:airline_theme = 'wombat'
+
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 "set clipboard=unnamedplus
 " Enhance command-line completion
@@ -142,9 +154,12 @@ set showmode
 set title
 " Show the (partial) command as it’s being typed
 set showcmd
-" Use normal line numbers
+" Use hybrid line numbers
+if exists("&relativenumber")
+    set relativenumber
+    au BufReadPost * set relativenumber
+endif
 set number
-set norelativenumber
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 " Reduce updatetime for quicker gitgutter updating (default 4000)
@@ -486,7 +501,8 @@ nnoremap <Leader>k O<Esc>O
 
 " Insert markdown fenced code block
 "function! FencedCodeBlock()
-   "normal! i``````k
+   "normal! i```
+```k
    "startinsert!
 "endfunction
 "nnoremap <leader>c :call FencedCodeBlock()<CR>

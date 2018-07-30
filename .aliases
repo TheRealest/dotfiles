@@ -14,26 +14,19 @@ alias duh="du -s * | sort -nr" # sort items in current directory by size
 alias duhh="du -hs *" # unsorted but with human readable sizes
 alias dfh="df -h"
 
+alias h="history"
+alias j="jobs"
+
 alias g="git"
 eval "$(hub alias -s)"
 
 alias pbcopy="reattach-to-user-namespace pbcopy"
 
-alias lquickbuilds="npm install distracteddev/derby"
-alias lquickcache="cd ~/lever/hire2/node_modules/lever-backend-app && npm install distracteddev/racer-bundle#with.cache && cd -"
-alias lcompilewatch="find . -name '*.coffee' | perl -ne '/node_modules\/(?!(l-|lever-))/ || print' | xargs -n300 -P4 coffee -bcw"
-alias lhire="LEVER_APP=candidates USE_CACHE=true node server.js"
-alias lhireclear="LEVER_APP=candidates USE_CACHE=true CLEAR_CACHE=true node server.js"
-alias lchire="LEVER_APP=candidates USE_CACHE=true coffee server.coffee"
-alias lchireclear="LEVER_APP=candidates USE_CACHE=true CLEAR_CACHE=true coffee server.coffee"
-alias lhireclearcandidates="DISABLE_BUILD_CACHE=true LEVER_APP=candidates USE_CACHE=true CLEAR_CACHE=true coffee server.coffee"
-
-alias lrenpm="rm -rf node_modules/ && time npm install"
-alias lreinstall="time (lrenpm && lquickbuilds && lquickcache)"
-alias affiance="~/lever/hire2/node_modules/.bin/affiance"
+alias renpm="rm -rf node_modules/ && time npm install"
 
 alias npubpatch="npm version patch && lpublish"
 alias npubminor="npm version minor && lpublish"
+
 
 alias n="npm run"
 alias jks="jekyll serve"
@@ -74,6 +67,17 @@ alias mitt="mix test --trace"
 
 # love2d (lua 2D game framework) launcher
 alias love="/Applications/love.app/Contents/MacOS/love"
+
+alias treei="tree -I \"node*\""
+
+alias t="todo.sh"
+
+alias tm="tmux"
+alias tml="tmux ls"
+alias tma="tmux attach -t"
+alias tmk="tmux kill-session -t"
+
+alias dm="docker-machine"
 
 colors() { x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; }
 alias colors="colors"
