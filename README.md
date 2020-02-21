@@ -34,7 +34,7 @@ Run `bootstrap.sh` to copy over all the dotfiles from this directory to `~`. The
   * start up tmux with `tm`
   * install the plugins with `prefix I`
 6. other stuff
-  * `brew install hub`
+  * `brew install hub` (it's okay to give `hub` your github username/password/2fa code when prompted -- it exchanges this for an API token and saves the token in `~/.config/hub`)
   * `brew cask install vlc`
   * `brew install the_silver_searcher`
   * install Magnet
