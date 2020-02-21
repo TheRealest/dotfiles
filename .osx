@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+###### NOTE! THIS IS PROBABLY OUT OF DATE! IT WAS WRITTEN FOR A MUCH OLDER
+###### VERSION OF MAC OS! MOST OF THIS STUFF IS EITHER NO LONGER NEEDED, NO LONGER
+###### RELEVANT, OR NO LONGER WORKS!
+
 # ~/.osx — http://sow.so/osx
 
 # Ask for the administrator password upfront

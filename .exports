@@ -21,6 +21,9 @@ export MANPAGER="less -X";
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto";
 
+# Disable OS message about switching to zsh
+export BASH_SILENCE_DEPRECATION_WARNING=1;
+
 # powerline tmux script
 #export POWERLINE_CONFIG_COMMAND="/Users/realprovencher/.tmux/plugins/powerline/powerline/bindings/bash/powerline.sh"
 export PATH="$PATH:/Users/realprovencher/.tmux/plugins/powerline/powerline/bindings/bash/powerline.sh"
@@ -58,8 +61,5 @@ export NODE_PATH="/Users/realprovencher/.npm/lib/node_modules"
 # disable virtualenv activate scripts from editing the command line prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# ngrok seat
-export LEVER_NGROK_ID="10"
-
-# Configuration for Lever's Slack
-export LEVER_SLACK_USERNAME="real"
+# coinlist vault address
+export VAULT_ADDR='https://vault.prod.coinlist'

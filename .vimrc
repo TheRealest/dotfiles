@@ -154,11 +154,7 @@ set showmode
 set title
 " Show the (partial) command as it’s being typed
 set showcmd
-" Use hybrid line numbers
-if exists("&relativenumber")
-    set relativenumber
-    au BufReadPost * set relativenumber
-endif
+" Set line numbers
 set number
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
@@ -498,14 +494,6 @@ nnoremap <Leader>k O<Esc>O
 " Increase/decrease window size
 "nnoremap + :resize +5<CR>
 "nnoremap - :resize -5<CR>
-
-" Insert markdown fenced code block
-"function! FencedCodeBlock()
-   "normal! i```
-```k
-   "startinsert!
-"endfunction
-"nnoremap <leader>c :call FencedCodeBlock()<CR>
 
 " compile coffescript selection or entire file
 vnoremap <leader>co :CoffeeCompile<CR>

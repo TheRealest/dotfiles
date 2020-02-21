@@ -72,13 +72,11 @@ source ~/.todo/todo_completion
 complete -F _todo t
 
 # tmuxinator completion
-source ~/.tmuxinator/completions.bash
+#source ~/.tmuxinator/completions.bash
 export LOLCOMMITS_DELAY=3
 
 export NVM_DIR="/Users/realp/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-eval $(docker-machine env default)
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 

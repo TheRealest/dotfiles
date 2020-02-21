@@ -20,12 +20,14 @@ alias j="jobs"
 alias g="git"
 eval "$(hub alias -s)"
 
-alias pbcopy="reattach-to-user-namespace pbcopy"
-
 alias renpm="rm -rf node_modules/ && time npm install"
 
-alias npubpatch="npm version patch && lpublish"
-alias npubminor="npm version minor && lpublish"
+# CoinList specific commands
+alias cssh="ssh real@read.compliance.prod.coinlist"
+alias issh="ssh real@read.ipseity.prod.coinlist"
+alias nssh="ssh real@noto01"
+alias cvault='vault read aws/creds/engineer_compliance | ag -s --nocolor key | sed -E -e "s/access_key *(.*)$/AWS_ACCESS_KEY_ID=\"\1\"/" -e "s/secret_key *(.*)$/AWS_SECRET_KEY_ID=\"\1\"/" | pbcopy; echo "Copied lines to clipboard for .env.local"'
+alias ivault='vault read aws/creds/engineer_ipseity | ag -s --nocolor key | sed -E -e "s/access_key *(.*)$/AWS_ACCESS_KEY_ID=\"\1\"/" -e "s/secret_key *(.*)$/AWS_SECRET_KEY_ID=\"\1\"/" | pbcopy; echo "Copied lines to clipboard for .env.local"'
 
 
 alias n="npm run"
