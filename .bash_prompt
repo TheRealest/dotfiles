@@ -54,7 +54,7 @@ function usernamehost() {
 }
 
 # show smiley indicating successful/unsuccessful last command
-SMILEY="\`if [[ \${PIPESTATUS[0]} -eq 0 ]]; then echo \"${BOLD}${CYAN}(:\"; else echo \"${BOLD}${MAGENTA}):\"; fi\`${RESET} "
+SMILEY="\`if [[ \${PIPESTATUS[0]} -eq 0 ]]; then echo \"\[${BOLD}${CYAN}\](:\"; else echo \"\[${BOLD}${MAGENTA}\]):\"; fi\`\[${RESET}\] "
 
-PS1='${RESET}${TOPLEFT}(${BOLD}$(usernamehost)${YELLOW}\w${RESET})$(git_info)\n${RESET}${BOTTOMLEFT}${DASH}${RESET}(${WHITE}\t${RESET})${DASH}'
+PS1='${RESET}${TOPLEFT}(${BOLD}$(usernamehost)${YELLOW}\w${RESET})$(git_info)${RESET}\n${BOTTOMLEFT}${DASH}\[${RESET}\](\[${WHITE}\]\t\[${RESET}\])${DASH}'
 PS1=$PS1"$SMILEY"
