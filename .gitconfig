@@ -58,8 +58,7 @@
   rbm = rebase master
   rbi = rebase -i
   rbc = rebase --continue
-  pr = pull-request
-  pro = pull-request -o
+  prc = pull-request -o
   prmks = pull-request -b TheRealest -o
   cl = clone
   clf = clean -f
