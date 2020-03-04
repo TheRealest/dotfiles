@@ -27,6 +27,7 @@ Run `bootstrap.sh` to copy over all the dotfiles from this directory to `~`. The
   * install Vundle: `git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
   * open a new instance of `vim` and run `:PluginInstall`
   * install python 3 with `brew install python`
+  * install fzf with `brew install fzf`
   * restart vim!
 5. install tmux
   * run `brew install tmux tmuxinator`

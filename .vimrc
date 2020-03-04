@@ -22,14 +22,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Townk/vim-autoclose'
 Plugin 'pangloss/vim-javascript'
-Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'guns/vim-sexp'
 Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -55,6 +53,17 @@ Plugin 'kana/vim-fakeclip'
 Plugin 'sjl/gundo.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'tomlion/vim-solidity'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'ecomba/vim-ruby-refactoring'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-endwise'
+Plugin 'junegunn/fzf.vim'
+
+" Enable builtin vim packages
+packadd! matchit
 
 call vundle#end()
 filetype plugin indent on    " required
@@ -160,6 +169,9 @@ set number
 set scrolloff=3
 " Reduce updatetime for quicker gitgutter updating (default 4000)
 set updatetime=250
+" Open new splits on right and bottom
+set splitright
+set splitbelow
 " Change mapleader
 let mapleader=","
 
@@ -369,30 +381,10 @@ nnoremap !r :call LoadRainbowParens()<CR>
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  " (in git repos ignore)
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" --ignore "*.js"'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 
-" replace current window's buffer when opening multiple files
-let g:ctrlp_open_multiple_files = 'vr'
-" abbreviation to change search directory to current file
-let g:ctrlp_abbrev = {
-  \ 'abbrevs': [
-    \ {
-      \ 'pattern': '%',
-      \ 'expanded': '@cd %:h'
-    \ }
-  \ ]
-\ }
-
-" bind \ (backward slash) to grep shortcut
+" create ag shortcut as :Ag
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!|wincmd p
-nnoremap \ :Ag<SPACE>
 
 " indent guides
 let g:indent_guides_start_level = 2
@@ -596,3 +588,44 @@ let g:gundo_width = 40
 let g:gundo_preview_height = 20
 let g:gundo_preview_bottom = 1
 "let g:gundo_auto_preview = 0
+
+" run macros over multiple lines with visual @
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
+" FZF config
+set rtp+=/usr/local/opt/fzf
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_layout = { 'down': '~30%' }
+" bindings for repo searching
+nnoremap \ :FzfAg<SPACE>
+nnoremap <C-p> :FzfFiles<CR>
+nnoremap <C-o> :FzfBuffers<CR>
+" enable preview for :FzfAg and FzfFiles
+command! -bang -nargs=* FzfAg
+  \ call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=? -complete=dir FzfFiles
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+nnoremap <silent> K :call SearchWordWithAg()<CR>
+vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+
+function! SearchWordWithAg()
+  execute 'FzfAg' expand('<cword>')
+endfunction
+
+function! SearchVisualSelectionWithAg() range
+  let old_reg = getreg('"')
+  let old_regtype = getregtype('"')
+  let old_clipboard = &clipboard
+  set clipboard&
+  normal! ""gvy
+  let selection = getreg('"')
+  call setreg('"', old_reg, old_regtype)
+  let &clipboard = old_clipboard
+  execute 'FzfAg' selection
+endfunction
