@@ -9,6 +9,7 @@ alias -- -="cd -"
 alias p="cd ~/projects"
 alias dl="cd ~/Downloads"
 
+alias running="ps aux | ag"
 alias kkill="kill -9"
 alias duh="du -s * | sort -nr" # sort items in current directory by size
 alias duhh="du -hs *" # unsorted but with human readable sizes
@@ -25,7 +26,12 @@ alias renpm="rm -rf node_modules/ && time npm install"
 # CoinList specific commands
 alias cssh="ssh real@read.compliance.prod.coinlist"
 alias issh="ssh real@read.ipseity.prod.coinlist"
+alias cwssh="ssh real@write.compliance.prod.coinlist"
+alias iwssh="ssh real@write.ipseity.prod.coinlist"
 alias nssh="ssh real@noto01"
+alias wssh="ssh real@read.wallet.prod.coinlist"
+
+alias vaultlogin="vault login -method=ldap username=real"
 alias cvault='vault read aws/creds/engineer_compliance | ag -s --nocolor key | sed -E -e "s/access_key *(.*)$/AWS_ACCESS_KEY_ID=\"\1\"/" -e "s/secret_key *(.*)$/AWS_SECRET_ACCESS_KEY=\"\1\"/" | pbcopy; echo "Copied lines to clipboard for .env.local"'
 alias ivault='vault read aws/creds/engineer_ipseity | ag -s --nocolor key | sed -E -e "s/access_key *(.*)$/AWS_ACCESS_KEY_ID=\"\1\"/" -e "s/secret_key *(.*)$/AWS_SECRET_ACCESS_KEY=\"\1\"/" | pbcopy; echo "Copied lines to clipboard for .env.local"'
 
@@ -36,7 +42,7 @@ alias rdbs="rails db:migrate:status"
 alias rdbr="rails db:rollback" # accepts STEP and VERSION vars
 alias rdbre="rails db:migrate:redo" # accepts STEP and VERSION vars, does rollback then migrate
 
-alias n="npm run"
+#alias n="npm run"
 alias jks="jekyll serve"
 alias jkd="jekyll serve --drafts"
 # python virtualenv activate shortcut
