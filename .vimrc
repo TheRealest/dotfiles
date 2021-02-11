@@ -20,7 +20,6 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'Townk/vim-autoclose'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
@@ -33,7 +32,6 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'wavded/vim-stylus'
 Plugin 'tpope/vim-ragtag'
-Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'geekjuice/vim-mocha'
 Plugin 'vim-scripts/text-object-left-and-right'
 Plugin 'michaeljsmith/vim-indent-object'
@@ -59,8 +57,13 @@ Plugin 'ngmy/vim-rubocop'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-dispatch'
+Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-endwise'
 Plugin 'junegunn/fzf.vim'
+Plugin 'tpope/vim-rhubarb'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
 
 " Enable builtin vim packages
 packadd! matchit
@@ -136,6 +139,8 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set smarttab
+" Set width at which lines should wrap
+set textwidth=100
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
@@ -326,6 +331,11 @@ endif
 " Code folding "
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent foldlevel=1 nofoldenable
 autocmd BufNewFile,BufReadPost *.html setl foldmethod=indent foldlevel=0 nofoldenable
+" ruby-vim folding
+autocmd BufNewFile,BufReadPost *.rb let ruby_fold=1
+autocmd BufNewFile,BufReadPost *.rb let ruby_foldable_groups='module class def'
+autocmd BufNewFile,BufReadPost *.rb setl foldlevel=99
+
 
 """""""""""""""""""""""""
 " BEGIN PLUGIN SETTINGS "
@@ -421,6 +431,7 @@ let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 " easymotion config
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1 " Turn on case insensitive feature
+let g:EasyMotion_startofline  = 0 " Keep cursor column with JK motions
 
 " incsearch config
 let g:incsearch#separate_highlight = 1
@@ -455,23 +466,18 @@ nmap <space> i_<esc>r
 nnoremap R "_d
 vnoremap R "_d
 
-" Switch windows w/ one key
-"nnoremap <C-h> <C-w>h
-"nnoremap <C-j> <C-w>j
-"nnoremap <C-k> <C-w>k
-"nnoremap <C-l> <C-w>l
-
 " Move windows without switching modifier keys
 nnoremap <C-w><C-h> <C-w>H
 nnoremap <C-w><C-j> <C-w>J
 nnoremap <C-w><C-k> <C-w>K
 nnoremap <C-w><C-l> <C-w>L
+nnoremap <C-w><C-t> <C-w>T
+
+" Switch <C-w><C-^> to open alternate file in vsplit
+nnoremap <C-w><C-^> :silent vs +e #<CR>
 
 " Save and close tab
 nnoremap ZA :wa<CR>:tabc<CR>
-
-" New tab
-"nnoremap <C-t> :tabnew<CR>
 
 " Removing directional keys
 noremap <Up> <nop>
@@ -579,8 +585,13 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 nmap s <Plug>(easymotion-overwin-f2)
 
 " easymotion linewise
-nmap <leader><leader>j <Plug>(easymotion-j)
-nmap <leader><leader>k <Plug>(easymotion-k)
+map <leader><leader>j <Plug>(easymotion-j)
+map <leader><leader>k <Plug>(easymotion-k)
+
+" easymotion within line
+map <leader><leader>h <Plug>(easymotion-linebackward)
+map <leader><leader>l <Plug>(easymotion-lineforward)
+map <leader><leader>f <Plug>(easymotion-bd-f)
 
 " gundo mappings
 nnoremap <leader><leader>u :GundoToggle<CR>
@@ -629,3 +640,20 @@ function! SearchVisualSelectionWithAg() range
   let &clipboard = old_clipboard
   execute 'FzfAg' selection
 endfunction
+
+" Rubocop config
+let g:vimrubocop_config = '.rubocop.yml'
+
+" Rails shortcuts
+nnoremap <leader>rd :Rails db:migrate<CR>
+nnoremap <leader>rb :Bundle<CR>
+
+" Rails routes searching
+command! -nargs=+ -complete=file -bar RRoutes
+  \ !rails routes | ag <args>
+nnoremap <leader>rr :RRoutes<space>
+
+" delimitMate configuration (autoclose quotes/brackets/parens)
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+let delimitMate_jump_expansion = 1
