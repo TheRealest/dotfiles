@@ -42,6 +42,8 @@
   stc = stash clear
   sts = "! f() { num=${1:-'0'}; hub stash show -p stash@{$num}; }; f"
   stb = stash branch
+  stum = stash push -u -m
+  sh = show HEAD
   cp = cherry-pick
   r = remote -v
   d = diff
@@ -56,6 +58,7 @@
   mmm = "! f() { git checkout master && git pull && git checkout - && git merge -; }; f"
   rb = rebase
   rbm = rebase master
+  rbmm = "! f() { git checkout master && git pull && git checkout - && git rebase -; }; f"
   rbi = rebase -i
   rbc = rebase --continue
   prc = pull-request -o
